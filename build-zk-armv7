@@ -1,0 +1,32 @@
+name: build-zk-armv7
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - uses: mlugg/setup-zig@v1
+
+      - name: Build static armv7 binary
+        env:
+          CGO_ENABLED: 1
+          GOOS: linux
+          GOARCH: arm
+          GOARM: 7
+          CC: zig cc -target arm-linux-musleabihf
+        run: |
+          go build -tags "fts5" \
+            -ldflags "-linkmode external -extldflags -static" \
+            -o zk-armv7 .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zk-armv7
+          path: zk-armv7
