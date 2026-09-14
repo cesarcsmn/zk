@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Instalar dependências e compilador ARMv7
         run: |
-          apk add --no-cache git build-base musl-dev gcc-armhf-community
+          apk add --no-cache git build-base musl-dev gcc-armhf g++-armhf
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,7 +23,8 @@ jobs:
           GOOS: linux
           GOARCH: arm
           GOARM: '7'
-          CC: arm-linux-musleabihf-gcc
+          CC: armv7-alpine-linux-musleabihf-gcc
+          CXX: armv7-alpine-linux-musleabihf-g++
         run: |
           go build \
             -tags "fts5 netgo osusergo" \
