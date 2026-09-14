@@ -10,9 +10,9 @@ jobs:
       image: golang:1.22-alpine
 
     steps:
-      - name: Instalar dependências no contêiner
+      - name: Instalar dependências e compilador ARMv7
         run: |
-          apk add --no-co-cache git build-base musl-dev gcc-armhf-community
+          apk add --no-cache git build-base musl-dev gcc-armhf-community
 
       - name: Checkout repository
         uses: actions/checkout@v4
