@@ -1,4 +1,3 @@
-
 name: build-zk-armv7
 
 on:
@@ -7,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Necessário para criar a Release no repositório
 
     steps:
       - name: Checkout repository
@@ -48,8 +49,10 @@ jobs:
           file zk-armv7
           ls -lh zk-armv7
 
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
+      - name: Create Nightly/Latest Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: zk-armv7
-          path: zk-armv7
+          tag_name: latest
+          name: "zk ARMv7 Build"
+          body: "Binário estático compilação ARMv7 para Android/Termux"
+          files: zk-armv7
