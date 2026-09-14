@@ -1,11 +1,7 @@
 name: build-zk-armv7
 
 on:
-  workflow_dispatch: # Apenas execução manual via botão
-  push:
-    branches: [ main ]
-    paths:
-      - '.github/workflows/build-zk-armv7.yml' # Evita disparar por alterações não relacionadas
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,7 +16,9 @@ jobs:
           go-version: '1.22'
 
       - name: Setup Zig
-        uses: mlugg/setup-zig@v1
+        uses: goto-bus-stop/setup-zig@v2
+        with:
+          version: 0.13.0
 
       - name: Build static armv7 binary
         env:
